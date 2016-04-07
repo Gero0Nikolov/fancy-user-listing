@@ -20,7 +20,17 @@ clone the repository from GitHub - https://github.com/Gero0Nikolov/fancy-user-li
 to your wp-content/wp-plugins/ folder and activate it from the WordPress Dashboard after that.
 
 <strong>How it works ?</strong>
+<br>
+Find the <strong>Fancy Lists</strong> in the Dashboard sidebar.<br>
+Then click on <strong>Add new list</strong> and then just configure it.
+
+<strong>Looking for a demo ?</strong>
+<br>
+Check it <strong><a href='http://make.blogy.co/contributors' target='_blank'>here</a>.</strong>
+
+<strong>Setup options :</strong>
 <ul>
+	<li>List title</li>
 	<li>Users Quantity</li>
 	<li>Show users in: List or Grid</li>
 	<li>Show users avatar: Yes or No</li>
@@ -34,11 +44,11 @@ to your wp-content/wp-plugins/ folder and activate it from the WordPress Dashboa
 <strong>Why to use the plugin ?</strong>
 <br>
 The need of quick listing of your registered users on some page or post ?
-Well this is your reason and this is your plugin.
+Well this is one good reason and this is your plugin.
 
 <strong>You don't find your functionality ?</strong>
 <br>
-Custom Post Type Lister is <strong>Open Source</strong> plugin, which means that you can contribute to it.
+Fancy User Listing is <strong>Open Source</strong> plugin, which means that you can contribute to it.
 Yup that's right! If you don't find the needed functionality just add it.
 Here is the <strong><a href="https://github.com/Gero0Nikolov/fancy-user-listing.git" target="_blank">repository</a></strong>.<br>
 Cheers!<br>
@@ -48,3 +58,12 @@ Cheers!<br>
 1. Upload the plugin files to the `/wp-content/plugins/plugin-name` directory, or install the plugin through the WordPress plugins screen directly.
 2. Activate the plugin through the 'Plugins' screen in WordPress
 3. Use the Settings->Plugin Name screen to configure the plugin
+
+== Screenshots ==
+
+1. Listing setup
+2. Listing list in the WordPress admin
+3. Grid style
+4. List style
+5. PopUp preview
+6. Usage preview

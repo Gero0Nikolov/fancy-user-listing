@@ -1,26 +1,44 @@
 # Fancy User Listing
-Installation :
+<strong>Installation :</strong>
+<br>
 Download and activate the plugin from WP.Org or 
 clone the repository from GitHub - https://github.com/Gero0Nikolov/fancy-user-listing.git - 
 to your wp-content/wp-plugins/ folder and activate it from the WordPress Dashboard after that.
 
 And that's it..
 
-Description :
-This plugin is used to list posts from Fancy User Listing via a shortcode.
+<strong>Description :</strong>
+<br>
+Hello there!<br>
+This plugin will give you the possibility to list any of your registered users to any of your posts or pages, with one simple shortcode that will be genereted on your listing setup page.
 
-After the installation in the Admin Dashboard Sidebar will appear Fancy List custom post type.
+Download and activate the plugin from WP.Org or 
+clone the repository from GitHub - https://github.com/Gero0Nikolov/fancy-user-listing.git - 
+to your wp-content/wp-plugins/ folder and activate it from the WordPress Dashboard after that.
 
-From the Fancy List CPT the user can create different listings just like a ordinary post.
+<strong>How it works ?</strong>
+<br>
+Find the <strong>Fancy Lists</strong> in the Dashboard sidebar.<br>
+Then click on <strong>Add new list</strong> and then just configure it.
 
-From the Fancy User Listing settings the user can choose :
+<strong>Looking for a demo ?</strong>
+<br>
+Check it <strong><a href='http://make.blogy.co/contributors' target='_blank'>here</a>.</strong>
+
+<strong>Setup options :</strong>
 <ul>
-<li>Users Quantity</li>
-<li>Show users in: List or Grid</li>
-<li>Show users avatar: Yes or No</li>
-<li>Use the User name as a popup trigger or direct link to the user profile</li>
-<li>Show users posts number: Yes or No</li>
-<li>Order by: ID, Email, Display Name, User Posts</li>
-<li>Order by ASC / DESC</li>
-<li>Use the Listing title as a title of the section where the listing is show in the Post / Page</li>
+	<li>List title</li>
+	<li>Users Quantity</li>
+	<li>Show users in: List or Grid</li>
+	<li>Show users avatar: Yes or No</li>
+	<li>Use the User name as a popup trigger or direct link to the user profile</li>
+	<li>Show users posts number: Yes or No</li>
+	<li>Order by: ID, Email, Display Name, User Posts</li>
+	<li>Order by ASC / DESC</li>
+	<li>Use the Listing title as a title of the section where the listing is show in the Post / Page</li>
 </ul>
+
+<strong>Why to use the plugin ?</strong>
+<br>
+The need of quick listing of your registered users on some page or post ?
+Well this is one good reason and this is your plugin.
