@@ -13,7 +13,7 @@ This plugin allows you to list all of your registered users in your posts / page
 == Description ==
 
 Hello there!<br>
-This plugin will give you the possibility to list any of your registered users to any of your posts or pages, with one simple shortcode that will be genereted on your listing setup page.
+This plugin will give you the possibility to list any of your registered users to any of your posts or pages, with one simple shortcode that will be generated on your listing setup page.
 
 Download and activate the plugin from WP.Org or 
 clone the repository from GitHub - https://github.com/Gero0Nikolov/fancy-user-listing.git - 
