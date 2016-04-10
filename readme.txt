@@ -4,7 +4,7 @@ Donate link: http://blogy.co/
 Tags: Listing, Custom Post Types, Shortcode, Open Source, Fancy, User Listing, Users, Listing, Fancy Listing, List, Fancy List, Users List, Users Listing, Fancy Users Listing
 Requires at least: 3.0.1
 Tested up to: 4.4.2
-Stable tag: 1.0
+Stable tag: 2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -22,7 +22,8 @@ to your wp-content/wp-plugins/ folder and activate it from the WordPress Dashboa
 <strong>How it works ?</strong>
 <br>
 Find the <strong>Fancy Lists</strong> in the Dashboard sidebar.<br>
-Then click on <strong>Add new list</strong> and then just configure it.
+Then click on <strong>Add new list</strong> and then just configure it.<br>
+Setup your listing and copyt the <strong>shortcode</strong> on every <i>page or post</i> that you want.<br>
 
 <strong>Looking for a demo ?</strong>
 <br>
@@ -31,7 +32,8 @@ Check it <strong><a href='http://make.blogy.co/contributors' target='_blank'>her
 <strong>Setup options :</strong>
 <ul>
 	<li>List title</li>
-	<li>Users Quantity</li>
+	<li>Choose custom users for listing: Check this and choose which from your users should be listed</li>
+	<li>Users Quantity: Set this to 0 to list all of your users!</li>
 	<li>Show users in: List or Grid</li>
 	<li>Show users avatar: Yes or No</li>
 	<li>Use the User name as a popup trigger or direct link to the user profile</li>
@@ -67,3 +69,4 @@ Cheers!<br>
 4. List style
 5. PopUp preview
 6. Usage preview
+7. Choose custom users for listing option

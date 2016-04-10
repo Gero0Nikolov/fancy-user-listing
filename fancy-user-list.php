@@ -2,7 +2,7 @@
 /*
 Plugin Name: Fancy User List
 Description: This amazing plugin gives you the possibility to list your website registered users on custom pages with one simple shortcode. :)
-Version: 1.0
+Version: 2.0
 Author: GeroNikolov
 Author URI: http://blogy.co?GeroNikolov
 License: GPLv2
@@ -30,9 +30,13 @@ class FANCY_USER_LIST {
 		//Add the shortcode which will call the plugin in the pages
 		add_action( 'init', array( $this, 'register_shortcode' ) );
 
-		//Register AJAX call
+		//Register AJAX call for Open User box
 		add_action( 'wp_ajax_ful_pull_user', array( $this, 'ful_pull_user' ) );
 		add_action( 'wp_ajax_nopriv_ful_pull_user', array( $this, 'ful_pull_user' ) );
+
+		//Register AJAX call for User Picker box
+		add_action( 'wp_ajax_ful_load_user_picker', array( $this, 'ful_load_user_picker' ) );
+		add_action( 'wp_ajax_nopriv_ful_load_user_picker', array( $this, 'ful_load_user_picker' ) );
 	}
 
 	//Add Admin JS
@@ -118,6 +122,15 @@ class FANCY_USER_LIST {
 			elseif ( $key == "listing_order" ) { update_post_meta( $post_id, "listing_order", $value ); }
 			elseif ( $key == "listing_order_type" ) { update_post_meta( $post_id, "listing_order_type", $value ); }
 			elseif ( $key == "page_title" ) { update_post_meta( $post_id, "page_title", $value ); }
+			elseif ( $key == "custom_users_listing" ) {
+				if ( $_POST["pic_users"] == "on" ) {
+					if ( !empty( $value ) ) { update_post_meta( $post_id, "custom_users_listing", $value ); }
+					else { $value = NULL; update_post_meta( $post_id, "custom_users_listing", $value ); }
+				} else {
+					$value = NULL; 
+					update_post_meta( $post_id, "custom_users_listing", $value );
+				}
+			}
 		}
 	}
 
@@ -143,6 +156,9 @@ class FANCY_USER_LIST {
 		$select_order_DESC = "";
 		$select_page_title_true = "";
 		$select_page_title_false = "";
+
+		//Checked vars
+		$check_custom_listing = "";
 		
 		//Setup metas
 		$users_quantity = $post_meta["users_quantity"][0];
@@ -177,50 +193,76 @@ class FANCY_USER_LIST {
 		$listing_title = $post_meta["page_title"][0];
 		if ( $listing_title == "yes" ) { $select_page_title_true = "selected"; }
 		elseif ( $listing_title == "no" ) { $select_page_title_false = "selected"; }
+
+		$custom_users_listing = $post_meta["custom_users_listing"][0];
+		if ( !empty( $custom_users_listing ) ) {
+			$check_custom_listing = "checked";
+		}
 	?>
 		<div class="setup-fields">
-			<label for="users_quantity">Users quantity :</label>
-			<input type="number" id="users_quantity" name="users_quantity" min="0" value="<?php echo $users_quantity; ?>">
-			<label for="users_shape">Show users in :</label>
-			<select id="users_shape" name="users_shape">
-				<option value="list" <?php echo $select_list_shape ?>>List</option>
-				<option value="grid" <?php echo $select_grid_shape ?>>Grid</option>
-			</select>
-			<label for="users_avatar">Show users avatar :</label>
-			<select id="users_avatar" name="users_avatar">
-				<option value="yes" <?php echo $select_users_avatars_true; ?>>Yes</option>
-				<option value="no" <?php echo $select_users_avatars_false; ?>>No</option>
-			</select>
-			<label for="users_popup">Use username as a popup trigger :</label>
-			<select id="users_popup" name="users_popup">
-				<option value="yes" <?php echo $select_popup_trigger_true; ?>>Yes</option>
-				<option value="no" <?php echo $select_popup_trigger_false; ?>>No</option>
-			</select>
-			<label for="users_posts_num">Show users posts number :</label>
-			<select id="users_posts_num" name="users_posts_num">
-				<option value="yes" <?php echo $select_posts_num_true; ?>>Yes</option>
-				<option value="no" <?php echo $select_posts_num_false; ?>>No</option>
-			</select>
-			<label for="listing_order">Order by :</label>
-			<select id="listing_order" name="listing_order">
-				<option value="ID" <?php echo $select_order_by_id; ?>>ID</option>
-				<option value="email" <?php echo $select_order_by_email; ?>>Email</option>
-				<option value="display_name" <?php echo $select_order_by_nickname; ?>>Display Name</option>
-				<option value="post_count" <?php echo $select_order_by_users_posts; ?>>User Posts</option>
-			</select>
-			<label for="listing_order_type">Order by ASC / DESC :</label>
-			<select id="listing_order_type" name="listing_order_type">
-				<option value="asc" <?php echo $select_order_ASC; ?>>ASC</option>
-				<option value="desc" <?php echo $select_order_DESC; ?>>DESC</option>
-			</select>
-			<label for="page_title">Use Listing title as Section title :</label>
-			<select id="page_title" name="page_title">
-				<option value="yes" <?php echo $select_page_title_true; ?>>Yes</option>
-				<option value="no" <?php echo $select_page_title_false; ?>>No</option>
-			</select>
+			<label for="pic_users">Choose custom users to list :</label>
+			<input type="checkbox" id="pic_users" name="pic_users" <?php echo $check_custom_listing; ?>>
+			<div id="quantity_holder">
+				<label for="users_quantity">Users quantity :</label>
+				<input type="number" id="users_quantity" name="users_quantity" min="0" value="<?php echo $users_quantity; ?>">
+			</div>
+			<div id="sep_holder">
+				<label for="users_shape">Show users in :</label>
+				<select id="users_shape" name="users_shape">
+					<option value="list" <?php echo $select_list_shape ?>>List</option>
+					<option value="grid" <?php echo $select_grid_shape ?>>Grid</option>
+				</select>
+				<label for="users_avatar">Show users avatar :</label>
+				<select id="users_avatar" name="users_avatar">
+					<option value="yes" <?php echo $select_users_avatars_true; ?>>Yes</option>
+					<option value="no" <?php echo $select_users_avatars_false; ?>>No</option>
+				</select>
+				<label for="users_popup">Use username as a popup trigger :</label>
+				<select id="users_popup" name="users_popup">
+					<option value="yes" <?php echo $select_popup_trigger_true; ?>>Yes</option>
+					<option value="no" <?php echo $select_popup_trigger_false; ?>>No</option>
+				</select>
+				<label for="users_posts_num">Show users posts number :</label>
+				<select id="users_posts_num" name="users_posts_num">
+					<option value="yes" <?php echo $select_posts_num_true; ?>>Yes</option>
+					<option value="no" <?php echo $select_posts_num_false; ?>>No</option>
+				</select>
+				<label for="listing_order">Order by :</label>
+				<select id="listing_order" name="listing_order">
+					<option value="ID" <?php echo $select_order_by_id; ?>>ID</option>
+					<option value="email" <?php echo $select_order_by_email; ?>>Email</option>
+					<option value="display_name" <?php echo $select_order_by_nickname; ?>>Display Name</option>
+					<option value="post_count" <?php echo $select_order_by_users_posts; ?>>User Posts</option>
+				</select>
+				<label for="listing_order_type">Order by ASC / DESC :</label>
+				<select id="listing_order_type" name="listing_order_type">
+					<option value="asc" <?php echo $select_order_ASC; ?>>ASC</option>
+					<option value="desc" <?php echo $select_order_DESC; ?>>DESC</option>
+				</select>
+				<label for="page_title">Use Listing title as Section title :</label>
+				<select id="page_title" name="page_title">
+					<option value="yes" <?php echo $select_page_title_true; ?>>Yes</option>
+					<option value="no" <?php echo $select_page_title_false; ?>>No</option>
+				</select>
+				<input type="text" style="display: none;" id="custom_users_listing" name="custom_users_listing" value="<?php echo $custom_users_listing; ?>">
+			</div>
 		</div>
-		<!-- HIDE SLUG -->
-		<style>#edit-slug-box { display: none; }</style>
+		<!-- INLINE STYLE -->
+		<style>
+		#edit-slug-box { display: none; }
+		.pick-box .loader {
+			background-image: url(<?php echo plugin_dir_url( __FILE__ ); ?>/assets/images/loader.gif);
+		}
+		</style>
+		<!-- INLINE SCRIPTS -->
+		<script type="text/javascript">
+			var ajaxurl = "<?php echo admin_url('admin-ajax.php'); ?>";
+			<?php if ( !empty( $custom_users_listing ) ) { ?>
+				jQuery( document ).ready(function(){
+					loadUserPicker();
+				});
+			<?php } ?>
+		</script>
 	<?php
 	}
 
@@ -246,11 +288,18 @@ class FANCY_USER_LIST {
 			$listing_order = $listing_meta["listing_order"][0];
 			$listing_order_type = $listing_meta["listing_order_type"][0];
 			$listing_title_as_section_title = $listing_meta["page_title"][0];
+			$custom_users_listing = $listing_meta["custom_users_listing"][0];
 
-			if ( $users_quantity <= 0 ) { $users_quantity = -1; }
+			$user_ids = array();
+			if ( !empty( $custom_users_listing ) ) {
+				$user_ids = explode( ",", $custom_users_listing );
+			} else {
+				if ( $users_quantity <= 0 ) { $users_quantity = -1; }
+			}
 
 			//Set arguments for the listing
 			$args = array(
+					"include" => $user_ids,
 					"orderby" => $listing_order,
 					"order" => $listing_order_type,
 					"number" => $users_quantity
@@ -435,6 +484,39 @@ class FANCY_USER_LIST {
 			</div>
 		</div>
 	<?php
+		die();
+	}
+
+	//AJAX Function ---> Load User Picker
+	function ful_load_user_picker() {
+		//Set arguments for the listing
+		$args = array(
+				"orderby" => "ID",
+				"order" => "DESC",
+				"number" => -1
+			);
+		$users_list = get_users( $args );
+		?>
+	
+		<div id="users-list">
+		<?php
+		foreach ( $users_list as $user ) {
+			$user_id = $user->ID;
+			$user_display_name = ucfirst( $user->display_name );
+			$user_avatar = get_avatar( $user_id );
+		?>
+		
+		<a href="#!" id="user-<?php echo $user_id; ?>" class="user" onclick="addUserToListing('<?php echo $user_id; ?>');">
+			<?php echo $user_avatar; ?>
+			<h1 class="user-title"><?php echo $user_display_name; ?></h1>
+		</a>
+
+		<?php
+		}
+		?>
+		</div>
+
+		<?php
 		die();
 	}
 }
