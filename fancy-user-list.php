@@ -2,7 +2,7 @@
 /*
 Plugin Name: Fancy User List
 Description: This amazing plugin gives you the possibility to list your website registered users on custom pages with one simple shortcode. :)
-Version: 2.2
+Version: 2.3
 Author: GeroNikolov
 Author URI: http://blogy.co?GeroNikolov
 License: GPLv2
@@ -131,6 +131,7 @@ class FANCY_USER_LIST {
 					update_post_meta( $post_id, "custom_users_listing", $value );
 				}
 			}
+			elseif ( $key == "users_posts_reveal" ) { update_post_meta( $post_id, "users_posts_reveal", $value ); }
 		}
 	}
 
@@ -180,6 +181,9 @@ class FANCY_USER_LIST {
 		if ( $users_posts_num == "yes" ) { $select_posts_num_true = "selected"; }
 		elseif ( $users_posts_num == "no" ) { $select_posts_num_false = "selected"; }
 
+		$users_posts_reveal = $post_meta["users_posts_reveal"][0];
+		if ( empty( $users_posts_reveal ) ) { $users_posts_reveal = 3; }
+
 		$users_order_by = $post_meta["listing_order"][0];
 		if ( $users_order_by == "ID" ) { $select_order_by_id = "selected"; }
 		elseif ( $users_order_by == "email" ) { $select_order_by_email = "selected"; }
@@ -227,6 +231,8 @@ class FANCY_USER_LIST {
 					<option value="yes" <?php echo $select_posts_num_true; ?>>Yes</option>
 					<option value="no" <?php echo $select_posts_num_false; ?>>No</option>
 				</select>
+				<label for="users_posts_reveal">Posts quantity showed in the user popup :</label>
+				<input type="number" id="users_posts_reveal" name="users_posts_reveal" min="3" value="<?php echo $users_posts_reveal; ?>">
 				<label for="listing_order">Order by :</label>
 				<select id="listing_order" name="listing_order">
 					<option value="ID" <?php echo $select_order_by_id; ?>>ID</option>
@@ -285,6 +291,7 @@ class FANCY_USER_LIST {
 			$users_avatar = $listing_meta["users_avatar"][0];
 			$users_popup = $listing_meta["users_popup"][0];
 			$users_posts_num = $listing_meta["users_posts_num"][0];
+			$users_posts_reveal = $listing_meta["users_posts_reveal"][0];
 			$listing_order = $listing_meta["listing_order"][0];
 			$listing_order_type = $listing_meta["listing_order_type"][0];
 			$listing_title_as_section_title = $listing_meta["page_title"][0];
@@ -414,6 +421,7 @@ class FANCY_USER_LIST {
 		<!-- INLINE SCRIPTS -->
 		<script type="text/javascript">
 			var ajaxurl = "<?php echo admin_url('admin-ajax.php'); ?>";
+			var posts_to_reveal = "<?php echo $users_posts_reveal; ?>";
 		</script>
 		<?php
 		return NULL;
@@ -421,7 +429,9 @@ class FANCY_USER_LIST {
 
 	//AJAX Function ---> Pull User
 	function ful_pull_user() {
-		$user_id = $_POST["data"];
+		$user_id = explode( "&", $_POST["data"] )[0];
+		$posts_to_reveal = explode( "&", $_POST["data"] )[1];
+
 		$user_meta = get_userdata( $user_id );
 		$user_avatar = get_avatar( $user_id );
 		$user_display_name = ucfirst( $user_meta->display_name );
@@ -452,7 +462,7 @@ class FANCY_USER_LIST {
 					'order' => 'DESC',
 					'post_status' => 'publish',
 					'post_type' => 'post',
-					'posts_per_page' => 3
+					'posts_per_page' => $posts_to_reveal
 				);
 			$collection_ = get_posts( $args );
 		

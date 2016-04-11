@@ -152,6 +152,9 @@
 .ful-meta-container .fancy-posts {
 	display: block;
 
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+
 	-webkit-transition: all 0.25s ease-in-out;
 	-moz-transition: all 0.25s ease-in-out;
 	-o-transition: all 0.25s ease-in-out;

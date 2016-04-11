@@ -6,7 +6,7 @@ jQuery( document ).ready(function(){
 		    ajaxurl, 
 		    {
 		        'action': 'ful_pull_user',
-		        'data': userID
+		        'data': userID +"&"+ posts_to_reveal,
 		    }, 
 		    function(response){
 		    	if ( response == "-1" ) {
