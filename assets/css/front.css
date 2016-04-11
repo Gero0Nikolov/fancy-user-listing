@@ -248,10 +248,10 @@
 
 	.fancy-user-list-popup .content {
 		width: 98%;
-		height: 80%;
+		height: 90%;
 
 		left: 1%;
-		top: 10%;
+		top: 0;
 
 		margin: 0;
 	}
@@ -281,10 +281,10 @@
 
 	.fancy-user-list-popup .content {
 		width: 98%;
-		height: 80%;
+		height: 90%;
 
 		left: 1%;
-		top: 10%;
+		top: 0;
 
 		margin: 0;
 	}
