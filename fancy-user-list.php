@@ -2,7 +2,7 @@
 /*
 Plugin Name: Fancy User List
 Description: This amazing plugin gives you the possibility to list your website registered users on custom pages with one simple shortcode. :)
-Version: 2.1
+Version: 2.2
 Author: GeroNikolov
 Author URI: http://blogy.co?GeroNikolov
 License: GPLv2
