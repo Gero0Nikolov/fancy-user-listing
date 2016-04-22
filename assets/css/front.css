@@ -1,5 +1,5 @@
-.height_225 { height: 225px !important; }
-.height_275 { height: 275px !important; }
+.height_225 { height: 250px !important; }
+.height_275 { height: 250px !important; }
 .height_100p { height: 100% !important; }
 
 /* LIST */
@@ -162,10 +162,13 @@
 }
 
 .fancy-user-list-popup #read-full-bio {
-	display: inline-block;
-	margin-left: 5px;
-	text-decoration: underline;
-	outline: 0;
+ 	display: block;
+    text-align: center;
+    margin: 5px auto 0;
+    padding: 2.5px;
+    outline: 0;
+    border-top: 1px solid #e5e5e5;
+    border-bottom: 1px solid #e5e5e5;
 }
 .fancy-user-list-popup #read-full-bio:hover {
 	text-decoration: none;
