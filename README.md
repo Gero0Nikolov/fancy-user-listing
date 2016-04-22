@@ -34,6 +34,7 @@ Check it <strong><a href='http://make.blogy.co/contributors' target='_blank'>her
 	<li>Show users in: List or Grid</li>
 	<li>Show users avatar: Yes or No</li>
 	<li>Use the User name as a popup trigger or direct link to the user profile</li>
+	<li>Show user bio into the Author Popup box</li>
 	<li>Show users posts number: Yes or No</li>
 	<li>Order by: ID, Email, Display Name, User Posts</li>
 	<li>Order by ASC / DESC</li>

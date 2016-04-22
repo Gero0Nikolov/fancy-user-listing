@@ -1,3 +1,7 @@
+.height_225 { height: 225px !important; }
+.height_275 { height: 275px !important; }
+.height_100p { height: 100% !important; }
+
 /* LIST */
 #fancy-user-list .fancy-user-container-link {
 	display: block;
@@ -142,6 +146,41 @@
     margin-top: -24px;
 }
 
+.fancy-user-list-popup .fancy-author-bio,
+.fancy-user-list-popup .fancy-author-full-bio {
+	display: block;
+	font-size: 14px;
+    text-align: justify;
+    padding: 0 5px;
+}
+
+.fancy-user-list-popup .fancy-author-full-bio { 
+	display: none; 
+	overflow: auto;
+    height: calc(100% - 115px);
+    border-top: 1px solid #e5e5e5;
+}
+
+.fancy-user-list-popup #read-full-bio {
+	display: inline-block;
+	margin-left: 5px;
+	text-decoration: underline;
+	outline: 0;
+}
+.fancy-user-list-popup #read-full-bio:hover {
+	text-decoration: none;
+}
+
+.fancy-user-list-popup #close-full-bio {
+    display: block;
+    text-align: center;
+    margin: 5px;
+    padding: 5px;
+    outline: 0;
+    border-top: 1px solid #e5e5e5;
+    border-bottom: 1px solid #e5e5e5;
+}
+
 .ful-meta-container {
 	display: block;
 	height: 100%;
@@ -243,6 +282,9 @@
 
 /* MOBILE */
 @media only screen and (max-width: 736px) {
+	.height_225 { height: 275px !important; }
+	.height_275 { height: calc(100% - 275px) !important; }
+
 	#fancy-user-grid .fancy-user-container-link {
 		display: block;
 		width: 100%;
@@ -272,10 +314,24 @@
 
 		margin: 0;
 	}
+
+	.fancy-user-list-popup .fancy-author-bio,
+	.fancy-user-list-popup .fancy-author-full-bio {
+		font-size: 16px;
+	}
+
+	.fancy-user-list-popup #read-full-bio {
+		display: block;
+		margin: 0px auto;
+		text-align: center;
+	}
 }
 
 /* TABLET */
 @media only screen and (max-width: 1024px) {
+	.height_225 { height: 275px !important; }
+	.height_275 { height: calc(100% - 275px) !important; }
+
 	#fancy-user-grid .fancy-user-container-link {
 		display: block;
 		width: 100%;
@@ -304,5 +360,16 @@
 		background-position: center;
 
 		margin: 0;
+	}
+
+	.fancy-user-list-popup .fancy-author-bio,
+	.fancy-user-list-popup .fancy-author-full-bio {
+		font-size: 16px;
+	}
+
+	.fancy-user-list-popup #read-full-bio {
+		display: block;
+		margin: 0px auto;
+		text-align: center;
 	}
 }

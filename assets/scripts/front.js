@@ -6,7 +6,7 @@ jQuery( document ).ready(function(){
 		    ajaxurl, 
 		    {
 		        'action': 'ful_pull_user',
-		        'data': userID +"&"+ posts_to_reveal,
+		        'data': userID +"&"+ posts_to_reveal +"&"+ users_bio,
 		    }, 
 		    function(response){
 		    	if ( response == "-1" ) {
@@ -18,6 +18,8 @@ jQuery( document ).ready(function(){
 		    			jQuery( ".fancy-user-list-popup" ).find( "#top" ).addClass( "normalize-location-y" );
 		    			jQuery( ".fancy-user-list-popup" ).find( "#bottom" ).addClass( "normalize-location-y" );
 		    		}, 150);
+		    		jQuery( "#read-full-bio" ).on("click", function(){ readFullBio(); });
+		    		jQuery( "#close-full-bio" ).on("click", function(){ closeFullBio(); });
 		    	}
 		    }
 		);
@@ -47,4 +49,20 @@ jQuery( document ).ready(function(){
 function closeFancyPopup() {
 	jQuery( ".fancy-user-list-popup" ).fadeOut( "fast" );
 	setTimeout(function(){ jQuery( ".fancy-user-list-popup" ).remove(); }, 150);
+}
+
+function readFullBio() {
+	jQuery( ".fancy-user-list-popup" ).find( ".fancy-author-bio" ).fadeOut( "fast" );
+	jQuery( ".fancy-user-list-popup" ).find( ".fancy-latest-post-label" ).fadeOut( "fast" );
+	jQuery( ".fancy-user-list-popup" ).find( "#top" ).removeClass( "height_225" ).addClass( "height_100p" );
+	setTimeout(function(){ jQuery( ".fancy-user-list-popup" ).find( ".fancy-author-full-bio" ).fadeIn( "fast" ); }, 150);
+}
+
+function closeFullBio() {
+	jQuery( ".fancy-user-list-popup" ).find( ".fancy-author-full-bio" ).fadeOut( "fast" );
+	jQuery( ".fancy-user-list-popup" ).find( "#top" ).removeClass( "height_100p" ).addClass( "height_225" );
+	setTimeout(function(){
+		jQuery( ".fancy-user-list-popup" ).find( ".fancy-author-bio" ).fadeIn( "fast" );
+		jQuery( ".fancy-user-list-popup" ).find( ".fancy-latest-post-label" ).fadeIn( "fast" );
+	}, 150);
 }

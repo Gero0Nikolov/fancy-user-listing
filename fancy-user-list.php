@@ -2,7 +2,7 @@
 /*
 Plugin Name: Fancy User List
 Description: This amazing plugin gives you the possibility to list your website registered users on custom pages with one simple shortcode. :)
-Version: 2.3
+Version: 3.0
 Author: GeroNikolov
 Author URI: http://blogy.co?GeroNikolov
 License: GPLv2
@@ -118,6 +118,7 @@ class FANCY_USER_LIST {
 			elseif ( $key == "users_shape" ) { update_post_meta( $post_id, "users_shape", $value ); }
 			elseif ( $key == "users_avatar" ) { update_post_meta( $post_id, "users_avatar", $value ); }
 			elseif ( $key == "users_popup" ) { update_post_meta( $post_id, "users_popup", $value ); }
+			elseif ( $key == "users_bio" ) { update_post_meta( $post_id, "users_bio", $value ); }
 			elseif ( $key == "users_posts_num" ) { update_post_meta( $post_id, "users_posts_num", $value ); }
 			elseif ( $key == "listing_order" ) { update_post_meta( $post_id, "listing_order", $value ); }
 			elseif ( $key == "listing_order_type" ) { update_post_meta( $post_id, "listing_order_type", $value ); }
@@ -147,6 +148,8 @@ class FANCY_USER_LIST {
 		$select_users_avatars_false = "";
 		$select_popup_trigger_true = "";
 		$select_popup_trigger_false = "";
+		$select_user_bio_true = "";
+		$select_user_bio_false = "";
 		$select_posts_num_true = "";
 		$select_posts_num_false = "";
 		$select_order_by_id = "";
@@ -176,6 +179,10 @@ class FANCY_USER_LIST {
 		$users_popup = $post_meta["users_popup"][0];
 		if ( $users_popup == "yes" ) { $select_popup_trigger_true = "selected"; }
 		elseif ( $users_popup == "no" ) { $select_popup_trigger_false = "selected"; }
+
+		$users_bio = $post_meta["users_bio"][0];
+		if ( $users_bio == "yes" ) { $select_user_bio_true = "selected"; }
+		elseif ( $users_bio == "no" ) { $select_user_bio_false = "selected"; }
 
 		$users_posts_num = $post_meta["users_posts_num"][0];
 		if ( $users_posts_num == "yes" ) { $select_posts_num_true = "selected"; }
@@ -225,6 +232,11 @@ class FANCY_USER_LIST {
 				<select id="users_popup" name="users_popup">
 					<option value="yes" <?php echo $select_popup_trigger_true; ?>>Yes</option>
 					<option value="no" <?php echo $select_popup_trigger_false; ?>>No</option>
+				</select>
+				<label for="users_bio">Show user bio in the popup :</label>
+				<select id="users_bio" name="users_bio">
+					<option value="yes" <?php echo $select_user_bio_true; ?>>Yes</option>
+					<option value="no" <?php echo $select_user_bio_false; ?>>No</option>
 				</select>
 				<label for="users_posts_num">Show users posts number :</label>
 				<select id="users_posts_num" name="users_posts_num">
@@ -290,6 +302,7 @@ class FANCY_USER_LIST {
 			$users_shape = $listing_meta["users_shape"][0];
 			$users_avatar = $listing_meta["users_avatar"][0];
 			$users_popup = $listing_meta["users_popup"][0];
+			$users_bio = $listing_meta["users_bio"][0];
 			$users_posts_num = $listing_meta["users_posts_num"][0];
 			$users_posts_reveal = $listing_meta["users_posts_reveal"][0];
 			$listing_order = $listing_meta["listing_order"][0];
@@ -422,6 +435,7 @@ class FANCY_USER_LIST {
 		<script type="text/javascript">
 			var ajaxurl = "<?php echo admin_url('admin-ajax.php'); ?>";
 			var posts_to_reveal = "<?php echo $users_posts_reveal; ?>";
+			var users_bio = "<?php echo $users_bio; ?>";
 		</script>
 		<?php
 		return NULL;
@@ -431,6 +445,7 @@ class FANCY_USER_LIST {
 	function ful_pull_user() {
 		$user_id = explode( "&", $_POST["data"] )[0];
 		$posts_to_reveal = explode( "&", $_POST["data"] )[1];
+		$show_user_bio = strtolower( explode( "&", $_POST["data"] )[2] );
 
 		$user_meta = get_userdata( $user_id );
 		$user_avatar = get_avatar( $user_id );
@@ -438,21 +453,42 @@ class FANCY_USER_LIST {
 		$user_posts_count = count_user_posts( $user_id );
 		$user_link = get_author_posts_url( $user_id );
 
+		$height_225 = "";
+		$height_275 = "";
+		$user_bio = "";
+		if ( $show_user_bio == "yes" ) {
+			$user_bio = nl2br( get_the_author_meta( "description", $user_id ) );
+			$user_bio_excerpt = wp_trim_words( $user_bio, 15, "..." );
+		
+			if ( !empty( $user_bio_excerpt ) ) {
+				$height_225 = "height_225";
+				$height_275 = "height_275";
+			}
+		}
+
 		$posts_end = "post";
 		if ( $user_posts_count > 1 ) { $posts_end = "posts"; }
 	?>
 		<div class="ful-meta-container">
-			<div id="top" class="fancy-author">
+			<div id="top" class="fancy-author <?php echo $height_225; ?>">
 				<?php echo $user_avatar; ?>
 				<a href="<?php echo $user_link; ?>" class="author_link">
 					<h2 class="fancy-author-name"><?php echo $user_display_name; ?></h2>
 				</a>
 				<?php if ( $user_posts_count > 0 ) { ?>
 					<span class="fancy-author-posts">- <?php echo $user_posts_count ." ". $posts_end; ?></span>
+				<?php }
+				if ( !empty( $user_bio ) && $show_user_bio == "yes" ) {
+				?>
+					<div class="fancy-author-bio"><?php echo $user_bio_excerpt; ?><a href="#!" id="read-full-bio">Read more</a></div>
+					<div class="fancy-author-full-bio"><?php echo $user_bio; ?><a href="#!" id="close-full-bio">Close</a></div>
+				<?php
+				}
+				if ( $user_posts_count > 0 ) { ?>
 					<h1 class="fancy-latest-post-label">Latest Posts :</h1>
 				<?php } ?>
 			</div>
-			<div id="bottom" class="fancy-posts">
+			<div id="bottom" class="fancy-posts <?php echo $height_275; ?>">
 	<?php
 		if ( $user_posts_count > 0 ) {
 			//Get the last 3 posts

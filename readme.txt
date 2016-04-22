@@ -3,8 +3,8 @@ Contributors: GeroNikolov
 Donate link: http://blogy.co/
 Tags: Listing, Custom Post Types, Shortcode, Open Source, Fancy, User Listing, Users, Listing, Fancy Listing, List, Fancy List, Users List, Users Listing, Fancy Users Listing
 Requires at least: 3.0.1
-Tested up to: 4.4.2
-Stable tag: 2.3
+Tested up to: 4.5
+Stable tag: 3.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -37,6 +37,7 @@ Check it <strong><a href='http://make.blogy.co/contributors' target='_blank'>her
 	<li>Show users in: List or Grid</li>
 	<li>Show users avatar: Yes or No</li>
 	<li>Use the User name as a popup trigger or direct link to the user profile</li>
+	<li>Show user bio into the Author Popup box</li>
 	<li>Show users posts number: Yes or No</li>
 	<li>Order by: ID, Email, Display Name, User Posts</li>
 	<li>Order by ASC / DESC</li>
